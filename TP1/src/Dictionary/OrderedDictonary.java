@@ -20,8 +20,8 @@ public class OrderedDictonary extends AbstractDictionary {
 
 	@Override
 	public int newIndexOf(Object key) {
-		if(size() == keys.length){
-			
+		if(size() == keys.length)
+		{			
 			Object[] newKeys = new Object[keys.length+1];
 			Object[] newValues = new Object[keys.length+1];
 			for(int i=0;i<keys.length;i++){
@@ -29,19 +29,23 @@ public class OrderedDictonary extends AbstractDictionary {
 				newValues[i] = values[i];
 			}
 			values = newValues;
-			keys = newKeys;
-			return keys.length;	
-		}else{
-			return size()+1;
+			keys = newKeys;	
+			return keys.length-1;
+		}
+		else
+		{
+			return size();
 		}
 	}
 
 	@Override
 	public int size() {
-		int t=0;
-		while(keys[t]!=null)
-			t++;
-		return t;
+		int size = 0;
+		for(int i=0;i<keys.length;i++)
+		{
+			size+=1;
+		}
+		return size;
 	}
 
 }

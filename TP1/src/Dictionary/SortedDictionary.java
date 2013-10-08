@@ -1,37 +1,78 @@
 package Dictionary;
 
 public class SortedDictionary extends AbstractDictionary {
+	
+	public SortedDictionary()
+	{
+		super();
+	}
+	
+	public SortedDictionary(int t)
+	{
+		super(t);
+	}
 
 	@Override
 	public int indexOf(Object key) {
 		int i = 0;
-		while(this.keys[i] != key && i < this.keys.length) i++;
+		while(i < this.keys.length && this.keys[i] != key) i++;
 		return i == this.keys.length ? -1 : i;
 	}
 
 	@Override
 	public int newIndexOf(Object key) {
-		if(size() == keys.length){
-			
-			Object[] newKeys = new Object[keys.length+1];
-			Object[] newValues = new Object[keys.length+1];
-			for(int i=0;i<keys.length;i++){
-				if(this.keys[i].compareTo(key))
+		int pos = 0;
+		Object[] newKeys;
+		Object[] newValues;
+		if(size() == keys.length)
+		{
+			newKeys = new Object[keys.length+1];
+			newValues = new Object[keys.length+1];
+		}
+		else
+		{
+			newKeys = new Object[keys.length];
+			newValues = new Object[keys.length];
+		}		
+		for(int i=0;i<keys.length;i++)
+		{
+			if( ((Comparable)keys[i]).compareTo((Comparable)key) < 0)
+			{
 				newKeys[i] = keys[i];
 				newValues[i] = values[i];
+				pos = i+1;
 			}
-			values = newValues;
-			keys = newKeys;
-			return keys.length;	
-		}else{
-			return size()+1;
+			else
+			{
+				newKeys[i+1] = keys[i];
+				newValues[i+1] = values[i];
+			}
 		}
+		values = newValues;
+		keys = newKeys;
+		return pos;	
 	}
 
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
+		int size = 0;
+		for(int i = 0; i< keys.length ; i++)
+		{
+			if( keys[i] != null)
+			{
+				size += 1;
+			}
+		}
+		return size;
 	}
-
+	
+	public String toString()
+	{
+		String s = "";
+		for(int i=0;i<this.keys.length;i++)
+		{
+			if(keys[i] != null) s+="'"+keys[i]+"' -> '"+values[i]+"'\n";
+		}
+		return s;
+	}
 }
